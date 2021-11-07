@@ -1,5 +1,11 @@
 # udacity_DC_nanoDegree
 
+    Library used :
+   - pandas
+   - numpy
+   - matplotlib
+   - seaborn
+   - statsmodels
 
 house_prices.ipynb :
 The First project For Nanodegree "Data science" udacity origination.
