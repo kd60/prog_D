@@ -1,6 +1,16 @@
 # udacity_DC_nanoDegree
 
-    Library used :
+
+Project Motivation
+
+For this project, I was interestested in using Seattle data to better understand the career of data scientists. In particular, the questions I interested in are
+
+Does a data science role return you a happy career, or a healthier lifestyle?
+Do data scientists get paid higher salaries for working hard?
+What skills are required to become a data scientist?
+
+
+    Instaltion needed to run:
    - pandas
    - numpy
    - matplotlib
