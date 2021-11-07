@@ -17,6 +17,9 @@ What skills are required to become a data scientist?
    - seaborn
    - statsmodels
 
+
+- File description 
+
 house_prices.ipynb :
 The First project For Nanodegree "Data science" udacity origination.
 
