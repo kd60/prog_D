@@ -5,12 +5,14 @@ Project Motivation
 
 For this project, I was interestested in using Seattle data to better understand the career of data scientists. In particular, the questions I interested in are
 
-Does a data science role return you a happy career, or a healthier lifestyle?
-Do data scientists get paid higher salaries for working hard?
-What skills are required to become a data scientist?
+- Which factors are affecting price the most and how much they are affecting it?
+
+- Are that apartments, which are underpriced according to our model, receiving more reviews per month?
+
+- In which month of the year prices are the highest?
 
 
-    Instaltion needed to run:
+    Dependences :
    - pandas
    - numpy
    - matplotlib
