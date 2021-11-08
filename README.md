@@ -26,7 +26,7 @@ house_prices.ipynb :
 The First project For Nanodegree "Data science" udacity origination.
 
 listings.csv :
-Dataset used for analysis operations.
+Dataset used for analysis operational.
 
 
 
@@ -40,7 +40,7 @@ We created a machine learning model to predict the rental price for seattle.
 
 We took a look at the feature importance of the trained model and check if they make sense.
 
-We gathered the Seattle Airbnb data, and get deep analysis for the dataset.
+We convene the Seattle Airbnb data, and get deep analysis for the dataset.
 
 We collected and clarified all the important amenities to make get a better feeling how host can make more money by providing better services to meet customers’ need.
 
