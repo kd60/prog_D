@@ -46,3 +46,8 @@ We collected and clarified all the important amenities to make get a better feel
 
 Medium Blog :
 https://medium.com/@kmarmx/hi-4f6208b47e4d
+
+
+Licensing Acknowledgements
+
+Thank you we are so greatful for Airbnb organisation for sharing your developer data for data science community and we wish you the best.
