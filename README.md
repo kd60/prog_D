@@ -1,6 +1,7 @@
 # udacity_DC_nanoDegree
 
 
+
 Project Motivation
 
 For this project, I was interestested using Seattle data to better understand the career of data scientists. In particular, the questions I interested in are
