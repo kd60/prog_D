@@ -2,9 +2,9 @@ import json
 import plotly
 import pandas as pd
 
-
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+
 
 from flask import Flask
 from flask import render_template, request, jsonify
