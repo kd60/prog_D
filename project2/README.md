@@ -21,8 +21,8 @@ app
 
 data    
 
-|- disaster_categories.csv # data to process    
-|- disaster_messages.csv # data to process    
+|- tmdb_movies.csv # data to process    
+|- tmdb_credits.csv # data to process    
 |- process_data.py # data cleaning pipeline    
 |- InsertDatabaseName.db # database to save clean data to     
 
@@ -41,7 +41,7 @@ There are three components I completed for this project.
 #### 1. ETL Pipeline
 A Python script, `process_data.py`, writes a data cleaning pipeline that:
 
- - Loads the messages and categories datasets
+ - Loads the tmdb movies and tmdb credits datasets
  - Merges the two datasets
  - Cleans the data
  - Stores it in a SQLite database
