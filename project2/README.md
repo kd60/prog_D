@@ -87,7 +87,7 @@ The project includes a web app where an emergency worker can input a new message
 
 ### installaitions
 
-Anaconda , sqlalchemy , Nltk , panda ,sklearn
+Anaconda , sqlalchemy , Nltk , panda ,sklearn , matplotlib , sqlite3,sys
 
 ### Licensing, Authors, Acknowledgements, etc.
 Thanks to Udacity for starter code for the web app. 
