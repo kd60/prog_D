@@ -85,5 +85,9 @@ The project includes a web app where an emergency worker can input a new message
 
 3. Go to http://127.0.0.0:3001/
 
+###installaitions
+
+Anaconda , sqlalchemy , Nltk , panda ,sklearn
+
 ### Licensing, Authors, Acknowledgements, etc.
 Thanks to Udacity for starter code for the web app. 
