@@ -28,6 +28,7 @@ def load_data(database_filepath):
     Loads data from SQLite database.
     
     Parameters:
+    
     database_filepath: Filepath to the database
     
     Returns:
