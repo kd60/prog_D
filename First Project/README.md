@@ -12,6 +12,7 @@ For this project, I was interestested using Seattle data to better understand th
 - In which month of the year prices are the highest?
 
 
+
     Dependences :
    - pandas
    - numpy
