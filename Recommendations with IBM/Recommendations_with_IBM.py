@@ -11,6 +11,9 @@
 # I. [Exploratory Data Analysis](#Exploratory-Data-Analysis)<br>
 # II. [Rank Based Recommendations](#Rank)<br>
 # III. [User-User Based Collaborative Filtering](#User-User)<br>
+# IV. [Matrix Factorization](#Matrix-Fact)<br>
+# V. [Extras & Concluding](#conclusions)
+# 
 # 
 
 # In[1]:
@@ -552,6 +555,229 @@ assert set(new_user_recs) == set(['1314.0','1429.0','1293.0','1427.0','1162.0','
 
 print("That's right!  Nice job!")
 
+
+# ### <a class="anchor" id="Matrix-Fact">Part IV: Matrix Factorization</a>
+# 
+# We will use matrix factorization to make article recommendations to the users on the IBM Watson Studio platform.
+# 
+# Understand the pitfalls of traditional methods and pitfalls of measuring the influence of recommendation engines under traditional regression and classification techniques.
+# Create recommendation engines using matrix factorization and FunkSVD
+# 
+# 
+
+# In[48]:
+
+
+# Load user_item_matrix
+U_I_Matrix = pd.read_pickle('user_item_matrix.p')
+
+
+# In[49]:
+
+
+# See the user_item_matrix
+U_I_Matrix.head()
+
+
+# In[50]:
+
+
+# Perform SVD on the User-Item Matrix Here
+
+u, s, vt = np.linalg.svd(U_I_Matrix)
+
+
+# In[51]:
+
+
+s.shape, u.shape, vt.shape
+
+
+# Doing SVD because no missing values.
+
+# In[52]:
+
+
+number_of_late_feat = np.arange(10,700+10,20)
+sum_of_errs = []
+
+for k in number_of_late_feat:
+    
+    s_new, u_new, vt_new = np.diag(s[:k]), u[:, :k], vt[:k, :]
+    
+    
+    user_item_est = np.around(np.dot(np.dot(u_new, s_new), vt_new))
+    
+   
+    diffs = np.subtract(U_I_Matrix, user_item_est)
+    
+    
+    err = np.sum(np.sum(np.abs(diffs)))
+    sum_of_errs.append(err)
+    
+    
+plt.plot(number_of_late_feat, 1 - np.array(sum_of_errs)/df.shape[0]);
+plt.xlabel('The Number of Latent Features');
+plt.ylabel('Accuracy');
+plt.title('Accuracy vs. Number of Latent Features');
+
+
+# In[53]:
+
+
+df_train = df.head(40000)
+df_test = df.tail(5993)
+
+def user_item_train_test(df_train, df_test):
+    
+    user_item_train = create_user_item_matrix(df_train)
+    user_item_test = create_user_item_matrix(df_test)
+    
+    test_idx = user_item_test.index
+    test_arts = user_item_test.columns
+    
+    return user_item_train, user_item_test, test_idx, test_arts
+
+user_item_train, user_item_test, test_idx, test_arts = user_item_train_test(df_train, df_test)
+
+
+# In[54]:
+
+
+test_idx
+
+
+# In[55]:
+
+
+train_idx = user_item_train.index
+train_idx 
+
+
+# In[56]:
+
+
+test_idx.difference(train_idx) 
+
+
+# In[57]:
+
+
+test_arts 
+
+
+# In[58]:
+
+
+train_arts = user_item_train.columns
+train_arts
+
+
+# In[59]:
+
+
+test_arts.difference(train_arts) 
+
+
+# In[60]:
+
+
+
+a = 662 
+b = 574 
+c = 20 
+d = 0 
+
+
+sol_4_dict = {
+    'How many users can we make predictions for in the test set?': c, 
+    'How many users in the test set are we not able to make predictions for because of the cold start problem?': a, 
+    'How many movies can we make predictions for in the test set?': b,
+    'How many movies in the test set are we not able to make predictions for because of the cold start problem?': d
+}
+
+t.sol_4_test(sol_4_dict)
+
+
+# In[61]:
+
+
+# fit SVD on the user_item_train matrix
+train_u, s_train, vt_train = np.linalg.svd(user_item_train)
+
+
+# In[62]:
+
+
+
+s_train.shape, train_u.shape, vt_train.shape
+
+
+# In[63]:
+
+
+number_of_late_feat = np.arange(10,700+10,20)
+sum_of_errs_train = []
+sum_of_errs_test = []
+
+idx_row = user_item_train.index.isin(test_idx)
+idx_col = user_item_train.columns.isin(test_arts)
+
+test_u = train_u[idx_row, :]
+vt_test = vt_train[:, idx_col]
+
+users_can_predict = np.intersect1d(list(user_item_train.index),list(user_item_test.index))
+    
+for k in number_of_late_feat:
+  
+    s_train_new, train_u_new, vt_train_new = np.diag(s_train[:k]), train_u[:, :k], vt_train[:k, :]
+    test_u_new, vt_test_new = test_u[:, :k], vt_test[:k, :]
+  
+    user_item_train_preds = np.around(np.dot(np.dot(train_u_new, s_train_new), vt_train_new))
+    user_item_test_preds = np.around(np.dot(np.dot(test_u_new, s_train_new), vt_test_new))
+  
+    diffs_train = np.subtract(user_item_train, user_item_train_preds)
+    diffs_test = np.subtract(user_item_test.loc[users_can_predict,:], user_item_test_preds)
+    
+    err_train = np.sum(np.sum(np.abs(diffs_train)))
+    err_test = np.sum(np.sum(np.abs(diffs_test)))
+    
+    sum_of_errs_train.append(err_train)
+    sum_of_errs_test.append(err_test)
+
+
+# In[64]:
+
+
+# Plot the accuracy
+fig, ax1 = plt.subplots()
+
+color = 'tab:red'
+ax1.set_xlabel('Number of Latent Features')
+ax1.set_ylabel('Accuracy for Training', color=color)
+ax1.plot(number_of_late_feat, 1 - np.array(sum_of_errs_train)/df.shape[0], color=color)
+ax1.tick_params(axis='y', labelcolor=color)
+ax1.set_title('Accuracy vs. Number of Latent Features')
+
+ax2 = ax1.twinx() 
+
+color = 'tab:green'
+ax2.set_ylabel('Test Accuracy ', color=color)  
+ax2.plot(number_of_late_feat, 1 - np.array(sum_of_errs_test)/df.shape[0], color=color)
+ax2.tick_params(axis='y', labelcolor=color)
+
+fig.tight_layout()  
+plt.show()
+
+
+# <a id='conclusions'></a>
+# 
+# 
+# ## Conclusion
+# 
+# 
+# Finally, we used a machine learning approach to building recommendations. I used the user-item interactions to build out a matrix decomposition. I used this decomposition to make predictations on new articles an individual might interact with, which turned out not to be that great).
+# 
 
 # In[ ]:
 
