@@ -8,6 +8,7 @@ del df['Unnamed: 0']
 del df_content['Unnamed: 0']
 
 
+
 def sol_1_test(sol_1_dict):
     sol_1_dict_ = {
     '`50% of individuals have _____ or fewer interactions.`': 3,
